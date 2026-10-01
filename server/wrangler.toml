@@ -1,0 +1,21 @@
+name = "anon-message"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Keep request logs off so sender IPs are not retained.
+[observability]
+enabled = false
+
+# Binaries (public/dl/) and installer templates, built by cli/build.sh.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "MEMBERS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Secrets (set with `npx wrangler secret put <NAME>`):
+#   BOT_TOKEN       - from @BotFather
+#   TEAM_KEY        - shared key every team member puts in their CLI config
+#   WEBHOOK_SECRET  - random string, used to verify requests come from Telegram
