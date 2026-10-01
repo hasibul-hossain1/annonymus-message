@@ -1,69 +1,69 @@
-# anon: Anonymous message
+# anon: Anonymous messages
 
-Terminal theke teammate ke message pathan. Teammate message ta paben Telegram e, kintu **janben na ke pathiyeche**.
+Send a message to a teammate from your terminal. They receive it on Telegram, but **they won't know who sent it**.
 
 ```sh
-anon send @rahim bhai tomar PR ta onek clean hoyeche
+anon send @rahim your PR was really clean
 ```
 ```
 📩 Anonymous message:
 
-bhai tomar PR ta onek clean hoyeche
+your PR was really clean
 ```
 
 ---
 
-## 1. Install (ekbar)
+## 1. Install (one time)
 
-Shuru korar age admin er kach theke **team key** ta niye nin.
+Get the **team key** from your admin before you start.
 
-**Mac / Linux** (terminal e):
+**Mac / Linux** (in a terminal):
 ```sh
 curl -fsSL https://anon-message.anonymus-message.workers.dev/install.sh | sh
 ```
 
-**Windows** (PowerShell e):
+**Windows** (in PowerShell):
 ```powershell
 irm https://anon-message.anonymus-message.workers.dev/install.ps1 | iex
 ```
 
-`Team key:` chaile key ta paste kore Enter chapun. Tarpor **notun ekta terminal khulun**.
+When it asks for `Team key:`, paste the key and press Enter. Then **open a new terminal**.
 
-## 2. Telegram e register (ekbar)
+## 2. Register on Telegram (one time)
 
-Message **receive** korte chaile ei step ta korte hobe.
+You need to do this to **receive** messages.
 
-1. Telegram e apnar **username** set kora thakte hobe. Settings → Username e giye dekhe nin.
-2. Telegram e **[@annonymusofficebot](https://t.me/annonymusofficebot)** khule **Start** chapun.
-3. Bot reply dibe `✅ Registered as @apnar_username`. Ekhon theke anonymous message ekhane ashbe.
+1. Make sure you have a Telegram **username**. Check it under Settings → Username.
+2. Open **[@annonymusofficebot](https://t.me/annonymusofficebot)** in Telegram and tap **Start**.
+3. The bot replies `✅ Registered as @your_username`. Anonymous messages will arrive in this chat from now on.
 
-> Telegram username bodlale bot ke abar `/start` pathan.
+> If you change your Telegram username, send `/start` to the bot again.
 
-## 3. Use
+## 3. Usage
 
 ```sh
-anon members                              # ke ke ache dekhun
-anon send @rahim meeting e tomar idea ta joss chilo
+anon members                              # see who's registered
+anon send @rahim great idea in the meeting today
 ```
 
-- **Tab chapun:** `anon send @` likhe Tab dile teammate der nam ashbe.
-- **Special character thakle** (jemon `!`, `?`, `$`, `'`) message ta single quote e rakhun: `anon send @rahim 'darun kaj!'`
-- **Lomba message** pipe kore pathano jay: `cat feedback.txt | anon send @rahim`
-- **Shorboccho 4000 character** pathano jay.
+- **Press Tab:** type `anon send @` and press Tab to see your teammates' names.
+- **Special characters** like `!`, `?`, `$` or `'`: wrap the message in single quotes, e.g. `anon send @rahim 'great job!'`
+- **Long messages** can be piped in: `cat feedback.txt | anon send @rahim`
+- Messages can be **up to 4000 characters**.
 
-> **Windows:** PowerShell e `@` chara likhun, jemon `anon send rahim message`. Tab o `@` chara kaj kore: `anon send ra` + Tab.
+> **Windows:** in PowerShell, leave out the `@`, e.g. `anon send rahim message`. Tab works without the `@` too: `anon send ra` + Tab.
 
 ---
 
-## Problem hole
+## Troubleshooting
 
-| Shomossha | Shomadhan |
+| Problem | Fix |
 |---|---|
-| `anon: command not found` | Notun terminal khulun |
-| `invalid team key` | Admin er kach theke notun key niye chalan: `anon config https://anon-message.anonymus-message.workers.dev <TEAM_KEY>` |
-| `@x is not registered` | Oi teammate ekhono bot e Start chapen nai. `anon members` diye nam ta check korun |
-| Tab dile nam ashe na | Notun terminal khulun. Notun member na dekhale `anon members` chalan |
-| Windows e message jay na | `@` chara nam likhun |
+| `anon: command not found` | Open a new terminal |
+| `invalid team key` | Get the new key from your admin and run: `anon config https://anon-message.anonymus-message.workers.dev <TEAM_KEY>` |
+| `@x is not registered` | That teammate hasn't tapped Start on the bot yet. Check the name with `anon members` |
+| Tab doesn't show names | Open a new terminal. If a new teammate is missing, run `anon members` |
+| Message not sent on Windows | Write the name without the `@` |
 
 ## Uninstall
 
