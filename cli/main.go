@@ -26,6 +26,7 @@ Usage:
   anon send @username <message...>      send an anonymous message
   echo "msg" | anon send @username      message can also come from stdin
   anon members                          list registered teammates
+  anon completion <zsh|bash|powershell> print shell completion script
 `
 
 var client = &http.Client{Timeout: 15 * time.Second}
@@ -44,6 +45,10 @@ func main() {
 		err = cmdSend(os.Args[2:])
 	case "members":
 		err = cmdMembers()
+	case "completion":
+		err = cmdCompletion(os.Args[2:])
+	case "__members":
+		completeMembers()
 	case "help", "-h", "--help":
 		fmt.Print(usage)
 	default:
@@ -126,19 +131,30 @@ func cmdSend(args []string) error {
 }
 
 func cmdMembers() error {
+	members, err := fetchMembers()
+	if err != nil {
+		return err
+	}
+	if len(members) == 0 {
+		fmt.Println("no one has registered yet (send /start to the bot)")
+	}
+	for _, m := range members {
+		fmt.Println("@" + m)
+	}
+	return nil
+}
+
+// fetchMembers gets the member list from the server and refreshes the
+// completion cache.
+func fetchMembers() ([]string, error) {
 	var res struct {
 		Members []string `json:"members"`
 	}
 	if err := call("GET", "/members", nil, &res); err != nil {
-		return err
+		return nil, err
 	}
-	if len(res.Members) == 0 {
-		fmt.Println("no one has registered yet (send /start to the bot)")
-	}
-	for _, m := range res.Members {
-		fmt.Println("@" + m)
-	}
-	return nil
+	writeMembersCache(res.Members)
+	return res.Members, nil
 }
 
 func call(method, path string, body any, out any) error {

@@ -42,7 +42,20 @@ if [ -z "$ANON_KEY" ]; then
 fi
 "$BIN_DIR/anon" config "$SERVER" "$ANON_KEY" > /dev/null
 
+# Tab completion for `anon send @<Tab>`.
+shell_name=$(basename "${SHELL:-sh}")
+case "$shell_name" in
+  zsh)  rc="$HOME/.zshrc" ;;
+  bash) rc="$HOME/.bashrc" ;;
+  *)    rc="" ;;
+esac
+if [ -n "$rc" ]; then
+  line="[ -x \"\$HOME/.local/bin/anon\" ] && eval \"\$(\"\$HOME/.local/bin/anon\" completion $shell_name)\""
+  grep -qF "$line" "$rc" 2>/dev/null || printf '\n%s\n' "$line" >> "$rc"
+fi
+
 echo ""
 echo "✓ anon installed!"
 echo "  1. Telegram e bot ke /start pathan (message receive korar jonno)"
 echo "  2. Notun terminal khule try korun: anon members"
+echo "  3. anon send @ likhe Tab chapun, teammate der nam ashbe"

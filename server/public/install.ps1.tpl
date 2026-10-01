@@ -21,7 +21,19 @@ $Key = $env:ANON_KEY
 if (-not $Key) { $Key = Read-Host "Team key" }
 & (Join-Path $Dir "anon.exe") config $Server $Key | Out-Null
 
+# Tab completion via the PowerShell profile. Profiles do not load under the
+# default "Restricted" policy, so allow local scripts for this user.
+if ((Get-ExecutionPolicy) -eq "Restricted") {
+    try { Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force } catch {}
+}
+$Line = 'if (Get-Command anon -ErrorAction SilentlyContinue) { anon completion powershell | Out-String | Invoke-Expression }'
+if (-not (Test-Path $PROFILE)) { New-Item -ItemType File -Force -Path $PROFILE | Out-Null }
+if (-not (Select-String -Path $PROFILE -SimpleMatch "anon completion" -Quiet)) {
+    Add-Content -Path $PROFILE -Value "`n$Line"
+}
+
 Write-Host ""
 Write-Host "anon installed!" -ForegroundColor Green
 Write-Host "  1. Telegram e bot ke /start pathan (message receive korar jonno)"
 Write-Host "  2. Notun terminal khule try korun: anon members"
+Write-Host "  3. anon send likhe naam er prothom akkhor diye Tab chapun (PowerShell e @ chara likhun)"

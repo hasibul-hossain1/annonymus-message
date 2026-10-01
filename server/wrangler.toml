@@ -1,6 +1,7 @@
 name = "anon-message"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
+preview_urls = false
 
 # Keep request logs off so sender IPs are not retained.
 [observability]
@@ -13,7 +14,7 @@ binding = "ASSETS"
 
 [[kv_namespaces]]
 binding = "MEMBERS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "f55f5c7bb9fa486db25b01c0e3a1b029"
 
 # Secrets (set with `npx wrangler secret put <NAME>`):
 #   BOT_TOKEN       - from @BotFather
